@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings FATAL => 'all';
-
+use v5.10;
 
 ### BINARY SEARCH
 sub binary_search {
