@@ -7,7 +7,7 @@ use warnings FATAL => 'all';
 sub binary_search {
 
     if (@_ != 4) {
-        die "Please provide valid arguments: array_link, left_inx, right_inx, value";
+        die "Пожалуйста, предоставьте правильные параметры: array_link, left_inx, right_inx, value";
     }
 
     my ($array, $left, $right, $elem_to_find) = @_;
@@ -26,8 +26,11 @@ sub binary_search {
     }
 
 }
+###
 
-sub test_binary_search {
+
+### TESTS
+sub _test_binary_search {
 
     say "ВВЕДИТЕ ЧИСЛО: ";
     chomp(my $elem = <STDIN>);
@@ -43,9 +46,7 @@ sub test_binary_search {
     say "ЭЛЕМЕНТ $elem МОЖЕТ БЫТЬ НАЙДЕН ПО ИНДЕКУ: $inx";
 
 }
-###
 
 
-### TESTS
-test_binary_search;
+_test_binary_search;
 ###

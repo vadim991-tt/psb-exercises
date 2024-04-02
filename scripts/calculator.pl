@@ -29,7 +29,7 @@ sub _perform_operation {
             return $left_operand / $right_operand;
         }
         default {
-            die "Unknown operator: $operator\n";
+            die "Неизвестный оператор: $operator\n";
         }
     }
 
@@ -64,12 +64,10 @@ sub _beatify_result {
 
 sub _calculate {
 
-    # Лист для хранения всего выражения
-    my @expression = ();
-
     say "ВВОД КАЖДОГО ОПЕРАТОРА/ОПЕРАНДА ПРОИЗВОДИТСЯ НА НОВОЙ СТРОЧКЕ";
     say "ВВЕДИТЕ ПЕРВОЕ ЧИСЛО, ОПЕРАТОР И ВТОРОЕ ЧИСЛО :";
 
+    my @expression = ();
     chomp (my $left_value = <STDIN>);
     my $result = $left_value;
     push (@expression, $result);
@@ -85,7 +83,7 @@ sub _calculate {
         my $eval_res = eval { _perform_operation($result, $operand, $right_value) };
 
         if ($@) {
-            say "$@";
+            warn "$@";
         } else {
             $result = $eval_res;
             push (@expression, $operand);
@@ -94,12 +92,11 @@ sub _calculate {
 
 
         say "result: ($result)";
-        say "ВВЕДИТЕ ОПЕРАТОР И ВТОРОЕ ЧИСЛО:";
+        say "ВВЕДИТЕ ОПЕРАТОР И ЧИСЛО:";
     }
 
 
-    my @beautified_expression = _beatify_result(\@expression);
-    say ((join " ", @beautified_expression) . " = $result");
+    say ((join " ", _beatify_result(\@expression)) . " = $result");
 }
 
 

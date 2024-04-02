@@ -35,7 +35,10 @@ sub bubble_sort {
         $i++;
     }
 }
+###
 
+
+### TESTS
 sub _test_bubble_sort {
     my @array = (5, 6, 3, 1, 7, 3, 2, 9, 10, 4, 1);
     say "ARRAY BEFORE: ";
@@ -44,10 +47,7 @@ sub _test_bubble_sort {
     say "ARRAY AFTER: ";
     say join " ", @array;
 }
-###
 
-
-### TESTS
 _test_bubble_sort;
 ###
 
