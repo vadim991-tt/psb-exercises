@@ -11,19 +11,18 @@ sub _read_conf {
         die "Can't open '$config_path': $!";
     }
 
-    my %result_hash = qw{ };
+    my @result_array = qw{ };
     foreach my $line (<IN>) {
         chomp ($line);
-        my ($user_name, $pass) = split(/=/, $line);
-        $result_hash{$user_name} = $pass;
+        push @result_array, $line;
     }
     close IN;
 
-    return %result_hash;
+    return @result_array;
 }
 
 
-my %config = _read_conf;
+my @resul_array = _read_conf;
 
-say "$_ => $config{$_}" for (keys %config);
+say "$_" for (@resul_array);
 
