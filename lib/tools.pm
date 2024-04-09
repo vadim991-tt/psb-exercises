@@ -42,7 +42,9 @@ sub login {
     my %user_prms = read_conf;
     my ($user_name, $user_passwd) = @_;
     my $find_user_flag = 0;
-    if (exists $user_prms{$user_name}) {
+    if (defined $user_name &&
+        defined $user_passwd &&
+        exists $user_prms{$user_name}) {
         my $passwd = $user_prms{$user_name};
         if (defined $passwd && $passwd eq $user_passwd) {
             $find_user_flag = 1;
@@ -54,6 +56,12 @@ sub login {
 sub reg_usr {
     my %user_prms = read_conf;
     my ($user_name, $user_passwd) = @_;
+
+    unless (defined $user_name && defined $user_passwd) {
+        say "Не инициализрованный логин или пароль";
+        return 0;
+    }
+
     if (exists $user_prms{$user_name}) {
         say "Пользователь с таким никнеймом уже зарегистрирован";
         return 0;
@@ -130,19 +138,56 @@ sub check_user_passwd {
     return 1;
 }
 
-
 sub delete_user {
     my $user_name = shift;
     my %config = read_conf;
     if (exists $config{$user_name}) {
         delete $config{$user_name};
         rewrite_config \%config;
-        say "Пользователь $user_name был успешно удален!";
+        say "Пользователь [$user_name] был успешно удален!";
         return 1;
     }
 
-    say "Пользователь не был удален т.к. он не существовал в базе!\n";
+    say "Пользователь [$user_name] не был удален т.к. он не существовал в базе!";
     return 0;
+}
+
+
+sub change_passwd {
+
+    my ($user_name, $new_user_passwd) = @_;
+
+    my %config = read_conf;
+    if (exists $config{$user_name}) {
+        $config{$user_name} = $new_user_passwd;
+        rewrite_config \%config;
+        say "Пользователю $user_name был успешно изменен пароль!";
+        return 1;
+    }
+
+    say "Пользователю [$user_name] не был изменен пароль т.к. такой пользователь не найден!";
+    return 0;
+}
+
+sub check_if_help_request() {
+    my $help_flag = shift @ARGV;
+    return defined $help_flag && $help_flag eq '-h';
+}
+
+sub print_help_information() {
+
+    my $multiline_string =
+<<'END_OF_STRING';
+    ######################################################
+    #back_end.pl usage
+    #action=reg user_name=NAME user_passwd=PASSWD ./task_12.pl - registaton new user in system;
+    #action=log user_name=NAME user_passwd=PASSWD ./task_12.pl - login in system
+    #action=del user_name=NAME ./task_12.pl - remove user from system
+    #action=change_passwd user_name=NAME user_passwd=PASSWD ./back_end.pl - change user password
+    ######################################################
+END_OF_STRING
+
+    print $multiline_string;
 }
 
 1;
