@@ -5,6 +5,8 @@ use XML::Simple;
 use Data::Dumper;
 use v5.10;
 
+### WARNING: POSSIBLE XXE VULNERABILITY ###
+
 my $filename = $ARGV[0];
 unless (defined $filename && $filename ne '') {
     die "Введите имя файла!\n";
