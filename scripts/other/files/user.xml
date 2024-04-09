@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data>
+    <name>John Doe</name>
+    <age>30</age>
+    <city>New York</city>
+    <email>john.doe@example.com</email>
+    <balance>100.50</balance>
+    <birthday>1989-07-15</birthday>
+    <isActive>true</isActive>
+</data>
