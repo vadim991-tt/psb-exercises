@@ -8,19 +8,19 @@ use v5.10;
 ### WARNING: POSSIBLE XXE VULNERABILITY ###
 
 my $filename = $ARGV[0];
-unless (defined $filename && $filename ne '') {
+if ( !( defined $filename && $filename ne '' ) ) {
     die "Введите имя файла!\n";
 }
 
 my $xml = XML::Simple->new;
 my $data = eval {
-   return $xml->XMLin($filename, ForceArray => 0, KeyAttr => []);
+    return $xml->XMLin( $filename, ForceArray => 0, KeyAttr => [] );
 };
 
-if ($@) {
+if ( $@ ) {
     die "Ошибка при чтении XML файла: $@\n";
 }
 
-foreach my $key (keys %{$data}) {
+foreach my $key ( keys %{$data} ) {
     say "$key => $data->{$key}";
 }
