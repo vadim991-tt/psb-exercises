@@ -7,12 +7,13 @@ our $config_path = "../conf.ini";
 
 sub read_conf {
 
-    if ( !( open IN, $config_path ) ) {
+    my $fh;
+    if ( !( open ($fh, '<', $config_path ))) {
         die "Can't open '$config_path': $!";
     }
 
     my %config = qw{};
-    foreach my $line ( <IN> ) {
+    foreach my $line ( <$fh> ) {
         chomp( $line );
 
         # Удаление всех пробелов и табуляций
@@ -33,7 +34,8 @@ sub read_conf {
             }
         }
     }
-    close IN;
+
+    close $fh;
 
     return \%config;
 }

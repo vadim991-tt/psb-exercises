@@ -50,17 +50,18 @@ sub _process_file {
 
     my $filename = shift;
 
-    unless ( -f $filename && -e _ ) {
+    if ( !( -f $filename && -e _ ) ) {
         die "Файл не найден или является директорией \n";
     }
 
-    unless ( open IN, $filename ) {
+    my $fh;
+    if ( !( open( $fh, '<', $filename ) ) ) {
         die "Невозможно открыть файл'$filename': $!";
     }
 
     my %dictionary = qw{};
     my $previous_line_word = "";
-    foreach my $line ( <IN> ) {
+    foreach my $line ( <$fh> ) {
 
         my @words = split( " ", $line );
         my $should_add_to_result = 1;
@@ -102,15 +103,16 @@ sub _process_file {
 
         }
     }
-    close IN;
+
+    close $fh;
 
     say "$_ => $dictionary{$_}" for ( grep( _filter_bad_word, keys %dictionary ) );
 
 }
 
 my $file_name = $ARGV[0];
-unless ( defined $file_name ) {
-    die "Пожалуйста, предоставьте имя файла\n";
+if ( !( defined $file_name ) ) {
+    die "Please, provide file name\n";
 }
 
 _process_file( _concat_file_with_dir( "/home/vadim/IdeaProjects/psb-exercises/newsletter", $file_name ));

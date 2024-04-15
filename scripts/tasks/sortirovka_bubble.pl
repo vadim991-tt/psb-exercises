@@ -28,7 +28,7 @@ sub bubble_sort {
 
         # Досрочный выход из цикла если не было
         # никаких перемещений
-        unless ( $swapped_flag ) {
+        if ( !( $swapped_flag ) ) {
             last;
         }
 
